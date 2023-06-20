@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { SOCKET_URL } from '../services/http.service.js';
+import { codeBlockService } from '../services/codeBlock.service';
 import { updateCodeBlock } from '../store/actions/codeBlock.actions.js';
+import { SOCKET_URL } from '../services/http.service.js';
 import { useDispatch } from 'react-redux';
-
 import { io } from 'socket.io-client';
+
 import AceEditor from 'react-ace';
+
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
-import { codeBlockService } from '../services/codeBlock.service';
 
 export function CodeBlock() {
     const { id } = useParams()
@@ -21,18 +22,14 @@ export function CodeBlock() {
     const socketRef = useRef();
 
     useEffect(() => {
-        document.title = `CodeBlock ${id}`;
-        console.log('loading codeBlock...')
         loadCodeBlock()
 
         // Create a socket connection
         socketRef.current = io(SOCKET_URL);
-
         socketRef.current.on('is teacher', (isTeacher) => {
             setIsTeacher(isTeacher);
         });
 
-        console.log('socketRef:', socketRef)
         // Listen for 'code change' events from the server
         socketRef.current.on('code change', (updatedCodeBlock) => {
             if (updatedCodeBlock._id === id) {
@@ -45,6 +42,11 @@ export function CodeBlock() {
             socketRef.current.disconnect();
         };
     }, [id])
+
+    useEffect(() => {
+        document.title = `CodeBlock ${codeBlock.title}`;
+    }, [codeBlock.title]);
+
 
     async function loadCodeBlock() {
         try {
