@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const http = require('http').createServer(app);
@@ -37,8 +38,10 @@ io.on('connection', (socket) => {
 });
 
 const codeBlockRoutes = require('./api/codeBlock/codeBlock.routes');
-app.use('/api/codeBlock', codeBlockRoutes);
+const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
 
+app.use('/api/codeBlock', codeBlockRoutes);
+app.use(express.static(frontendPath));
 http.listen(port, () => {
   console.log('Server is running on port: ', port);
 });
