@@ -15,7 +15,7 @@ export function codeBlockReducer(state = INITIAL_STATE, action = {}) {
     case UPDATE_CODEBLOCK:
       return {
         ...state,
-        codeBlocks: state.codeBlocks.map((codeBlock) =>
+        codeBlocks: state.codeBlocks?.map((codeBlock) =>
           codeBlock._id === action.updatedCodeBlock._id
             ? action.updatedCodeBlock
             : codeBlock
