@@ -8,19 +8,15 @@ function App() {
   return (
     <Router>
       <Routes>
-
         <Route
           path="/"
           element={<Lobby />}
         />
-
         <Route
           path="/codeblock/:id"
           element={<CodeBlock />}
         />
-
       </Routes>
-
     </Router>
   )
 }

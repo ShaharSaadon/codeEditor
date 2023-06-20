@@ -5,6 +5,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
+import { codeBlockService } from '../services/codeBlock.service';
 
 export function CodeBlock() {
     const { id } = useParams()
@@ -13,11 +14,20 @@ export function CodeBlock() {
 
 
     useEffect(() => {
-        const foundCodeBlock = codeBlocks.find((block) => block.id === id);
-        if (foundCodeBlock) {
-            setCodeBlock(foundCodeBlock);
-        }
+        document.title = `CodeBlock ${id}`;
+        console.log('loading codeBlock...')
+        loadCodeBlock()
     }, [id])
+
+    async function loadCodeBlock() {
+        try {
+            const codeBlock = await codeBlockService.getById(id);
+            setCodeBlock(codeBlock);
+        } catch (error) {
+            console.log('error:', error);
+        }
+    }
+
 
     function handleCodeChange(newCode) {
         setCodeBlock(prevCodeBlock => ({ ...prevCodeBlock, code: newCode }))
