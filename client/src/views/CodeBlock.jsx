@@ -14,6 +14,8 @@ import { codeBlockService } from '../services/codeBlock.service';
 export function CodeBlock() {
     const { id } = useParams()
     const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
+    const [isTeacher, setIsTeacher] = useState(true);
+
     const navigate = useNavigate()
     const socketRef = useRef();
     const dispatch = useDispatch();
@@ -27,6 +29,11 @@ export function CodeBlock() {
         // Create a socket connection
         socketRef.current = io(SOCKET_URL);
 
+        socketRef.current.on('is teacher', (isTeacher) => {
+            setIsTeacher(isTeacher);
+        });
+
+        console.log('socketRef:', socketRef)
         // Listen for 'code change' events from the server
         socketRef.current.on('code change', (updatedCodeBlock) => {
             if (updatedCodeBlock._id === id) {
@@ -48,7 +55,6 @@ export function CodeBlock() {
             console.log('error:', error);
         }
     }
-
 
     function handleCodeChange(newCode) {
         setCodeBlock(prevCodeBlock => ({ ...prevCodeBlock, code: newCode }))
@@ -75,7 +81,8 @@ export function CodeBlock() {
                 setOptions={{
                     useWorker: false,
                     enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true
+                    enableLiveAutocompletion: true,
+                    readOnly: isTeacher
                 }}
                 style={{ width: '100%', height: '400px' }}
             />
