@@ -22,8 +22,8 @@ export function Lobby() {
             <h1>Choose Code Block</h1>
             <ul>
                 {codeBlocks.map(block => (
-                    <li key={block.id}>
-                        <Link to={`/codeblock/${block.id}`}>{block.title}</Link>
+                    <li key={block._id}>
+                        <Link to={`/codeblock/${block._id}`}>{block.title}</Link>
                     </li>
                 ))}
             </ul>
