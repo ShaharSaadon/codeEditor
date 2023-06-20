@@ -13,13 +13,17 @@ export function codeBlockReducer(state = INITIAL_STATE, action = {}) {
         codeBlocks: action.codeBlocks,
       };
     case UPDATE_CODEBLOCK:
+      console.log(state.codeBlocks);
+      console.log(action);
       return {
         ...state,
-        codeBlocks: state.codeBlocks?.map((codeBlock) =>
-          codeBlock._id === action.updatedCodeBlock._id
-            ? action.updatedCodeBlock
-            : codeBlock
-        ),
+        codeBlocks: Array.isArray(state.codeBlocks)
+          ? state.codeBlocks.map((codeBlock) =>
+              codeBlock._id === action.updatedCodeBlock._id
+                ? action.updatedCodeBlock
+                : codeBlock
+            )
+          : [],
       };
 
     default:

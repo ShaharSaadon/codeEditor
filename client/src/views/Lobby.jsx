@@ -11,12 +11,13 @@ export function Lobby() {
         document.title = 'Lobby';
         dispatch(loadCodeBlocks())
     }, [])
+    console.log(codeBlocks);
 
     return (
         <div>
             <h1>Choose Code Block</h1>
             <ul>
-                {codeBlocks?.map(block => (
+                {Array.isArray(codeBlocks) && codeBlocks.map(block => (
                     <li key={block._id}>
                         <Link to={`/codeblock/${block._id}`}>{block.title}</Link>
                     </li>
