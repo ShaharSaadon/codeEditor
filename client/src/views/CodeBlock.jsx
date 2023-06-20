@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SOCKET_URL } from '../services/http.service.js';
+import { updateCodeBlock } from '../store/actions/codeBlock.actions.js';
+import { useDispatch } from 'react-redux';
 
 import { io } from 'socket.io-client';
 import AceEditor from 'react-ace';
@@ -14,6 +16,7 @@ export function CodeBlock() {
     const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
     const navigate = useNavigate()
     const socketRef = useRef();
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -57,6 +60,9 @@ export function CodeBlock() {
     function goBack() {
         navigate(-1)
     }
+    async function save() {
+        dispatch(updateCodeBlock(codeBlock));
+    }
 
     return (
         <div>
@@ -75,6 +81,7 @@ export function CodeBlock() {
             />
 
             <button onClick={goBack}>Back</button>
+            <button onClick={save}>run & save</button>
         </div>
     )
 }

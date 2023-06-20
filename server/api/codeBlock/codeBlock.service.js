@@ -27,7 +27,27 @@ async function getById(codeBlockId) {
   }
 }
 
+async function update(codeBlock) {
+  try {
+    const collection = await dbService.getCollection('codes');
+    await collection.updateOne(
+      { _id: new ObjectId(codeBlock._id) },
+      {
+        $set: {
+          title: codeBlock.title,
+          code: codeBlock.code,
+        },
+      }
+    );
+    return codeBlock;
+  } catch (err) {
+    console.log(`while updating codeBlock ${codeBlock._id}`, err);
+    throw err;
+  }
+}
+
 module.exports = {
   query,
   getById,
+  update,
 };

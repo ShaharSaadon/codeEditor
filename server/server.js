@@ -12,8 +12,6 @@ const io = require('socket.io')(http, {
   },
 });
 
-app.use(cors());
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'public')));
 } else {
@@ -38,10 +36,10 @@ io.on('connection', (socket) => {
 });
 
 const codeBlockRoutes = require('./api/codeBlock/codeBlock.routes');
-const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
 
+app.use(express.json()); // handle with put requests
 app.use('/api/codeBlock', codeBlockRoutes);
-app.use(express.static(frontendPath));
+
 http.listen(port, () => {
   console.log('Server is running on port: ', port);
 });

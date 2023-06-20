@@ -5,6 +5,7 @@ const STORAGE_KEY = 'codeBlock';
 export const codeBlockService = {
   query,
   getById,
+  update,
 };
 
 async function query() {
@@ -13,4 +14,8 @@ async function query() {
 
 async function getById(codeBlockId) {
   return httpService.get(`${STORAGE_KEY}/${codeBlockId}`);
+}
+
+async function update(codeBlock) {
+  return httpService.put(`${STORAGE_KEY}/${codeBlock._id}`, codeBlock);
 }
