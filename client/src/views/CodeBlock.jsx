@@ -17,9 +17,8 @@ export function CodeBlock() {
     const [isTeacher, setIsTeacher] = useState(true);
 
     const navigate = useNavigate()
-    const socketRef = useRef();
     const dispatch = useDispatch();
-
+    const socketRef = useRef();
 
     useEffect(() => {
         document.title = `CodeBlock ${id}`;
@@ -55,19 +54,17 @@ export function CodeBlock() {
             console.log('error:', error);
         }
     }
-
+    async function save() {
+        dispatch(updateCodeBlock(codeBlock));
+    }
     function handleCodeChange(newCode) {
         setCodeBlock(prevCodeBlock => ({ ...prevCodeBlock, code: newCode }))
 
         // Emit a 'code change' event to the server
         socketRef.current.emit('code change', { ...codeBlock, code: newCode });
     }
-
     function goBack() {
         navigate(-1)
-    }
-    async function save() {
-        dispatch(updateCodeBlock(codeBlock));
     }
 
     return (
