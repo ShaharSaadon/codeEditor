@@ -1,6 +1,11 @@
 import Axios from 'axios';
 
-export const BASE_URL =
+export const SOCKET_URL =
+  process.env.NODE_ENV === 'production'
+    ? '/' // update this with your production server URL
+    : 'http://localhost:4000';
+
+const BASE_URL =
   process.env.NODE_ENV === 'production'
     ? '/api/'
     : 'http://localhost:4000/api/';

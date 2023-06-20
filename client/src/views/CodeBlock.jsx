@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { codeBlocks } from '../assets/codeBlocks';
+import { SOCKET_URL } from '../services/http.service.js';
+
+import { io } from 'socket.io-client';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
@@ -11,12 +13,28 @@ export function CodeBlock() {
     const { id } = useParams()
     const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
     const navigate = useNavigate()
+    const socketRef = useRef();
 
 
     useEffect(() => {
         document.title = `CodeBlock ${id}`;
         console.log('loading codeBlock...')
         loadCodeBlock()
+
+        // Create a socket connection
+        socketRef.current = io(SOCKET_URL);
+
+        // Listen for 'code change' events from the server
+        socketRef.current.on('code change', (updatedCodeBlock) => {
+            if (updatedCodeBlock._id === id) {
+                setCodeBlock(updatedCodeBlock);
+            }
+        });
+
+        return () => {
+            // Disconnect the socket when the component unmounts
+            socketRef.current.disconnect();
+        };
     }, [id])
 
     async function loadCodeBlock() {
@@ -31,6 +49,9 @@ export function CodeBlock() {
 
     function handleCodeChange(newCode) {
         setCodeBlock(prevCodeBlock => ({ ...prevCodeBlock, code: newCode }))
+
+        // Emit a 'code change' event to the server
+        socketRef.current.emit('code change', { ...codeBlock, code: newCode });
     }
 
     function goBack() {
