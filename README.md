@@ -62,7 +62,7 @@ When the user successfully enters the correct solution to the coding task, the s
 
 <img src="screenshots/LobyPageMobile.png" width=25%/><img src="screenshots/TeacherModeMobile.png" width=25%/><img src="screenshots/StudentModeMobile.png" width=25%/><img src="screenshots/CorrectSolutionMobile.png" width=25%/>
 
-## Installation
+## Getting Started
 
 ### Prerequisites
 
