@@ -1,6 +1,6 @@
 import { httpService } from './http.service.js';
 
-const STORAGE_KEY = 'codeBlock';
+const STORAGE_KEY = 'codeblock';
 
 export const codeBlockService = {
   query,
