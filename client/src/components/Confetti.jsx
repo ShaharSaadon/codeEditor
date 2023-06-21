@@ -12,7 +12,7 @@ export function ConfettiFeature({ isSolutionCorrect }) {
             setShowConfetti(true);
             const timer = setTimeout(() => {
                 setShowConfetti(false);
-            }, 7000); // 10 seconds
+            }, 7000);
 
             // Clear timeout on component unmount
             return () => clearTimeout(timer);

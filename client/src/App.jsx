@@ -1,15 +1,17 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppHeader } from './components/AppHeader'
 import { CodeBlock } from './views/CodeBlock';
 import { useState } from 'react';
 import { Lobby } from './views/Lobby'
 import './assets/styles/global.scss'
+import { AppFooter } from './components/AppFooter';
 
 function App() {
   const [title, setTitle] = useState('Choose Code Block')
   return (
     <section className='main-container'>
       <Router>
+
         <AppHeader title={title} />
         <Routes>
           <Route
@@ -20,7 +22,10 @@ function App() {
             path="/codeblock/:id"
             element={<CodeBlock setTitle={setTitle} />}
           />
+
         </Routes>
+        <AppFooter />
+
       </Router>
     </section>
   )

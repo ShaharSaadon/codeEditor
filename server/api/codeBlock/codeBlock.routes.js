@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.get('/:id', getCodeBlockById);
 router.get('/', getCodeBlocks);
-router.put('/:id', updateCodeBlock); // Add a PUT route
+router.put('/:id', updateCodeBlock);
 
 module.exports = router;

@@ -10,9 +10,8 @@ const io = require('socket.io')(http, {
     origin: '*',
   },
 });
-
+require('./services/socket.service')(io);
 let corsOptions;
-let userCount = 0;
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'public')));
@@ -32,32 +31,6 @@ if (process.env.NODE_ENV === 'production') {
     credentials: true,
   };
 }
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  userCount++;
-  console.log('userCount:', userCount);
-
-  if (userCount === 1) {
-    // This is the first user (teacher), so they can't edit
-    socket.emit('is teacher', true);
-  } else {
-    // This is the second or subsequent user (student), so they can edit
-    socket.emit('is teacher', false);
-  }
-
-  socket.on('code change', (codeBlock) => {
-    // broadcast code changes to all connected clients except the sender
-    socket.broadcast.emit('code change', codeBlock);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-    userCount--;
-    console.log('userCount:', userCount);
-  });
-});
-
 app.use(cors(corsOptions));
 
 const codeBlockRoutes = require('./api/codeBlock/codeBlock.routes');

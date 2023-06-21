@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { codeBlockService } from '../services/codeBlock.service';
 import { updateCodeBlock } from '../store/actions/codeBlock.actions.js';
 import { useDispatch } from 'react-redux';
 import { Loader } from '../components/Loader';
 import { ConfettiFeature } from '../components/Confetti';
-import { HintModal } from '../components/HintModal'
+import { DynamicModal } from '../components/DynamicModal'
 import { useSocket } from '../hooks/useSocket';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
@@ -14,6 +14,12 @@ import AceEditor from 'react-ace'
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
+
+const modalTypes = {
+    HINT: 'hint',
+    SOLUTION: 'solution',
+}
+
 export function CodeBlock({ setTitle }) {
     const { id } = useParams()
 
@@ -27,12 +33,6 @@ export function CodeBlock({ setTitle }) {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const socket = useSocket(id, setCodeBlock, setIsTeacher);
-
-
-    const ModalTypes = {
-        HINT: 'hint',
-        SOLUTION: 'solution',
-    }
 
     useEffect(() => {
         loadCodeBlock()
@@ -96,12 +96,12 @@ export function CodeBlock({ setTitle }) {
                 style={{ width: '100%', height: '400px' }}
             />
             <div className='actions'>
-                <Button variant="contained" onClick={goBack}>Back</Button>
-                <Button variant="contained" onClick={save}>Save</Button>
-                <Button variant="contained" onClick={() => handleOpen(ModalTypes.HINT)}>Hint</Button>
-                {isTeacher ? <Button variant="contained" onClick={() => handleOpen(ModalTypes.SOLUTION)}>Solution</Button> : ''}
+                <Button variant="contained" onClick={goBack} color="error">Back</Button>
+                <Button variant="contained" onClick={save} color="success">Save</Button>
+                <Button variant="contained" onClick={() => handleOpen(modalTypes.HINT)} color="warning">Hint</Button>
+                {isTeacher ? <Button variant="contained" onClick={() => handleOpen(modalTypes.SOLUTION)}>Solution</Button> : ''}
             </div>
-            <HintModal isModalOpen={isModalOpen}
+            <DynamicModal isModalOpen={isModalOpen}
                 handleClose={handleClose}
                 text={(modalType === 'hint') ? codeBlock.hint : codeBlock.solution}
                 title={(modalType === 'hint') ? 'Hey! It\'s great ask for help when you need🌞' : 'Here is the solution for you'}

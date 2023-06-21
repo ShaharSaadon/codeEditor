@@ -17,7 +17,7 @@ const style = {
     color: 'black',
 };
 
-export function HintModal({ isModalOpen, handleClose, text, title }) {
+export function DynamicModal({ isModalOpen, handleClose, text, title }) {
     return (
         <Modal
             open={isModalOpen}
@@ -37,7 +37,7 @@ export function HintModal({ isModalOpen, handleClose, text, title }) {
     );
 }
 
-HintModal.propTypes = {
+DynamicModal.propTypes = {
     isModalOpen: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,

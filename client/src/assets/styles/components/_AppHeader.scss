@@ -1,18 +1,19 @@
 .app-header {
+  position: fixed;
+  width: 100%;
   color: $dark-color;
-  // margin-block-end: 100px;
   .logo {
-    width: 125px;
+    width: $logo-width;
   }
 
   .title {
-    font-size: 1em;
+    font-size: $small-title;
     text-align: center;
   }
 
   @include mq(mobile-breakpoint) {
     .title {
-      font-size: 2rem;
+      font-size: $big-title;
     }
   }
 }

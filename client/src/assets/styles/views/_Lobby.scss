@@ -1,15 +1,18 @@
 .cards-container {
-  margin-block-start: 100px;
+  padding-top: 50px;
+  margin-block: em($cards-margin);
   .code-block-card {
-    transition: box-shadow 0.3s ease; /* Add a smooth transition effect for the box shadow */
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
-    padding: 24px 12px; /* Adjust padding as needed */
-    align-items: center;
-    justify-content: center;
     display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    padding: em($xxLarge-space) em($medium-space);
 
     &:hover {
-      box-shadow: 4px 4px 12px rgba(255, 253, 253, 0.5); /* Increase the box shadow on hover */
+      box-shadow: em($min-space) em($min-space) em($medium-space)
+        rgba($light-color, 0.5);
       cursor: pointer;
     }
   }

@@ -1,41 +1,32 @@
-const logger = require('./logger.service');
+module.exports = function (io) {
+  const rooms = {};
 
-let gIo = null;
-let userCount = 0;
+  io.on('connection', (socket) => {
+    socket.on('join room', (room) => {
+      socket.join(room);
+      rooms[room] = rooms[room] ? rooms[room] + 1 : 1;
+      console.log(`User joined room: ${room}. Users in room: ${rooms[room]}`);
 
-function setupSocketAPI(http) {
-  gIo = require('socket.io')(http, {
-    cors: {
-      origin: '*',
-    },
-  });
+      if (rooms[room] === 1) {
+        socket.emit('is teacher', true);
+      } else {
+        socket.emit('is teacher', false);
+      }
+    });
 
-  gIo.on('connection', (socket) => {
-    console.log(`New connected socket [id: ${socket.id}]`);
-    userCount++;
-    console.log(`User count: ${userCount}`);
+    socket.on('code change', (room, codeBlock) => {
+      socket.to(room).emit('code change', codeBlock);
+    });
 
-    if (userCount === 1) {
-      // This is the first user (teacher), so they can't edit
-      socket.emit('is teacher', true);
-    } else {
-      // This is the second or subsequent user (student), so they can edit
-      socket.emit('is teacher', false);
-    }
+    socket.on('leave room', (room) => {
+      socket.leave(room);
+      rooms[room]--;
+      console.log(`User left room: ${room}. Users in room: ${rooms[room]}`);
+    });
 
     socket.on('disconnect', () => {
-      console.log(`Socket disconnected [id: ${socket.id}]`);
-      userCount--;
-      console.log(`User count: ${userCount}`);
-    });
-
-    socket.on('code change', (codeBlock) => {
-      // broadcast code changes to all connected clients except the sender
-      socket.broadcast.emit('code change', codeBlock);
+      console.log('user disconnected');
+      // Here you need to handle user disconnection from all rooms they're in
     });
   });
-}
-
-module.exports = {
-  setupSocketAPI,
 };
