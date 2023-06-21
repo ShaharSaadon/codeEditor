@@ -1,5 +1,7 @@
 
-![Code Editor](screenshots/Logo.jpg)
+<div align="center">
+  <img src="screenshots/Logo.jpg" alt="Code Editor" width="300">
+</div>
 
 # CodeEditor
 
@@ -58,10 +60,7 @@ When the user successfully enters the correct solution to the coding task, the s
 
 ## Mobile
 
-<img src="screenshots/LobyPageMobile.png" width=25%/>
-<img src="screenshots/TeacherModeMobile.png" width=25%/>
-<img src="screenshots/StudentModeMobile.png" width=25%/>
-<img src="screenshots/CorrectSolutionMobile.png" width=25%/>
+<img src="screenshots/LobyPageMobile.png" width=25%/><img src="screenshots/TeacherModeMobile.png" width=25%/><img src="screenshots/StudentModeMobile.png" width=25%/><img src="screenshots/CorrectSolutionMobile.png" width=25%/>
 
 ## Installation
 
