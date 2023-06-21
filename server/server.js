@@ -54,10 +54,10 @@ io.on('connection', (socket) => {
   });
 });
 
-const codeBlockRoutes = require('./api/codeblock/codeblock.routes');
+const codeBlockRoutes = require('./api/codeBlock/codeBlock.routes');
 
 app.use(express.json()); // handle with put requests
-app.use('/api/codeblock', codeBlockRoutes);
+app.use('/api/codeBlock', codeBlockRoutes);
 
 const port = process.env.PORT || 3030;
 http.listen(port, () => {
