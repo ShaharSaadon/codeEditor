@@ -1,5 +1,5 @@
 
-![Code Editor](screenshots/logo.jpg)
+![Code Editor](screenshots/Logo.jpg)
 
 # CodeEditor
 
@@ -36,7 +36,7 @@ CodeEditor is a simple, real-time collaborative code editor built with React, Re
 ## Screenshots
 
 ### Loby Page
-![Loby Page](screenshots/lobyPage.png)
+![Loby Page](screenshots/LobyPage.png)
 
 The Lobby page displays the title "Choose code block" and a list of code block items. Clicking on an item directs the user to the corresponding code block page.
 
