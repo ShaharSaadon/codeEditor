@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import PropTypes from 'prop-types';
 
 export function ConfettiFeature({ isSolutionCorrect }) {
     const { width, height } = useWindowSize()
@@ -30,3 +31,7 @@ export function ConfettiFeature({ isSolutionCorrect }) {
         </>
     )
 }
+
+ConfettiFeature.propTypes = {
+    isSolutionCorrect: PropTypes.bool.isRequired,
+};

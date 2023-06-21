@@ -2,52 +2,40 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { codeBlockService } from '../services/codeBlock.service';
 import { updateCodeBlock } from '../store/actions/codeBlock.actions.js';
-import { SOCKET_URL } from '../services/http.service.js';
 import { useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
 import { Loader } from '../components/Loader';
-import { Box } from '@mui/material';
 import { ConfettiFeature } from '../components/Confetti';
 import { HintModal } from '../components/HintModal'
+import { useSocket } from '../hooks/useSocket';
 import Button from '@mui/material/Button';
-
-import AceEditor from 'react-ace';
+import PropTypes from 'prop-types';
+import AceEditor from 'react-ace'
 
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
-
 export function CodeBlock({ setTitle }) {
     const { id } = useParams()
+
     const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
     const [isTeacher, setIsTeacher] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isSolutionCorrect, setIsSolutionCorrect] = useState(false)
-    const handleOpen = () => setIsModalOpen(true);
+    const [modalType, setModalType] = useState('')
+
     const handleClose = () => setIsModalOpen(false)
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const socketRef = useRef();
+    const socket = useSocket(id, setCodeBlock, setIsTeacher);
+
+
+    const ModalTypes = {
+        HINT: 'hint',
+        SOLUTION: 'solution',
+    }
 
     useEffect(() => {
         loadCodeBlock()
-        // Create a socket connection
-        socketRef.current = io(SOCKET_URL);
-        socketRef.current.on('is teacher', (isTeacher) => {
-            setIsTeacher(isTeacher);
-        });
-
-        // Listen for 'code change' events from the server
-        socketRef.current.on('code change', (updatedCodeBlock) => {
-            if (updatedCodeBlock._id === id) {
-                setCodeBlock(updatedCodeBlock);
-            }
-        });
-
-        return () => {
-            // Disconnect the socket when the component unmounts
-            socketRef.current.disconnect();
-        };
     }, [id])
 
     useEffect(() => {
@@ -74,7 +62,7 @@ export function CodeBlock({ setTitle }) {
         else setIsSolutionCorrect(false)
 
         // Emit a 'code change' event to the server
-        socketRef.current.emit('code change', { ...codeBlock, code: newCode });
+        socket.emit('code change', { ...codeBlock, code: newCode });
 
     }
     function goBack() {
@@ -83,13 +71,17 @@ export function CodeBlock({ setTitle }) {
     function normalize(str) {
         return str.replace(/\s+/g, ' ').trim();
     }
+    function handleOpen(type) {
+        setModalType(type)
+        setIsModalOpen(true);
+    }
 
     if (codeBlock.title === '' && codeBlock.code === '') return <Loader />
 
     return (
-        <div>
-            <h2>{isTeacher ? 'Teacher Mode' : 'Student Mode'}</h2>
-            <h3>instruction: {codeBlock.instruction}</h3>
+        <div className='code-block-container'>
+            <h2 className='mode'>{isTeacher ? 'Teacher Mode' : 'Student Mode'}</h2>
+            <h3 className='instruction'> <span> instruction</span>: {codeBlock.instruction}</h3>
             <AceEditor
                 mode="javascript"
                 theme="monokai"
@@ -103,16 +95,23 @@ export function CodeBlock({ setTitle }) {
                 }}
                 style={{ width: '100%', height: '400px' }}
             />
-
-            <p>{isTeacher ? `solution: ${codeBlock.solution}` : ''}</p>
-            <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: '100px' }}>
+            <div className='actions'>
                 <Button variant="contained" onClick={goBack}>Back</Button>
                 <Button variant="contained" onClick={save}>Save</Button>
-                <Button variant="contained" onClick={handleOpen}>Hint</Button>
-            </Box>
-            <HintModal isModalOpen={isModalOpen} handleClose={handleClose} hint={codeBlock.hint} />
+                <Button variant="contained" onClick={() => handleOpen(ModalTypes.HINT)}>Hint</Button>
+                {isTeacher ? <Button variant="contained" onClick={() => handleOpen(ModalTypes.SOLUTION)}>Solution</Button> : ''}
+            </div>
+            <HintModal isModalOpen={isModalOpen}
+                handleClose={handleClose}
+                text={(modalType === 'hint') ? codeBlock.hint : codeBlock.solution}
+                title={(modalType === 'hint') ? 'Hey! It\'s great ask for help when you need🌞' : 'Here is the solution for you'}
+            />
             <ConfettiFeature isSolutionCorrect={isSolutionCorrect} />
 
         </div>
     )
 }
+
+CodeBlock.propTypes = {
+    setTitle: PropTypes.func.isRequired
+};

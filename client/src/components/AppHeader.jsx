@@ -2,24 +2,31 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import logo from '../assets/images/logo.png'
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 
 export function AppHeader({ title }) {
     return (
-        <Box sx={{ flexGrow: 1 }} className='app-header full'>
+        <Box className='app-header full'>
             <AppBar position="static" style={{ backgroundColor: 'white' }} >
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between', height: '10vh' }}>
-                    <img src={logo} alt="" className='logo' />
-                    <Typography variant="h4" component="div" style={{ color: '#0a1929' }}>
+                    <Link to={'/'}>
+                        <img src={logo} alt="Code Block Logo" className='logo' />
+                    </Link>
+                    <Typography variant="h4" className="title" component="div" style={{ color: '#0a1929' }}>
                         {title}
                     </Typography>
-                    <img src={logo} alt="" className='logo' />
-
+                    <Link to={'/'}>
+                        <img src={logo} alt="Code Block Logo" className='logo' />
+                    </Link>
                 </Toolbar>
             </AppBar>
         </Box >
     );
 }
+
+AppHeader.propTypes = {
+    title: PropTypes.string.isRequired,
+};

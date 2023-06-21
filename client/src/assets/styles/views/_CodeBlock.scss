@@ -1,0 +1,23 @@
+.code-block-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: spac;
+  .mode {
+    align-self: center;
+    margin-block: 24px;
+  }
+
+  .instruction {
+    margin-block-end: 24px;
+    span {
+      font-weight: 800;
+      text-decoration: underline;
+    }
+  }
+  .actions {
+    margin-block-start: 50px;
+    display: flex;
+    justify-content: space-around;
+  }
+}

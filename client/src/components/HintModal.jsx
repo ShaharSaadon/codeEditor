@@ -2,6 +2,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import PropTypes from 'prop-types';
 
 const style = {
     position: 'absolute',
@@ -12,11 +13,11 @@ const style = {
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    padding: 4,
     color: 'black',
 };
 
-export function HintModal({ isModalOpen, handleClose, hint }) {
+export function HintModal({ isModalOpen, handleClose, text, title }) {
     return (
         <Modal
             open={isModalOpen}
@@ -26,12 +27,19 @@ export function HintModal({ isModalOpen, handleClose, hint }) {
         >
             <Box sx={style} >
                 <Typography id="modal-modal-title" variant="0" component="h2">
-                    Hey! It's great ask for help when you need🌞
+                    {title}
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }} >
-                    {hint}
+                    {text}
                 </Typography>
             </Box>
         </Modal>
     );
 }
+
+HintModal.propTypes = {
+    isModalOpen: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    text: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+};

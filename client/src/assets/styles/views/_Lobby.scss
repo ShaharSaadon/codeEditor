@@ -1,13 +1,16 @@
-.code-block-card {
-  transition: box-shadow 0.3s ease; /* Add a smooth transition effect for the box shadow */
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
-  padding: 16px; /* Adjust padding as needed */
-  align-items: center;
-  justify-content: center;
-  display: flex;
+.cards-container {
+  margin-block-start: 100px;
+  .code-block-card {
+    transition: box-shadow 0.3s ease; /* Add a smooth transition effect for the box shadow */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
+    padding: 24px 12px; /* Adjust padding as needed */
+    align-items: center;
+    justify-content: center;
+    display: flex;
 
-  &:hover {
-    box-shadow: 4px 4px 12px rgba(255, 253, 253, 0.5); /* Increase the box shadow on hover */
-    cursor: pointer;
+    &:hover {
+      box-shadow: 4px 4px 12px rgba(255, 253, 253, 0.5); /* Increase the box shadow on hover */
+      cursor: pointer;
+    }
   }
 }

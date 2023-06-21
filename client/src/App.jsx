@@ -1,10 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Lobby } from './views/Lobby'
 import { AppHeader } from './components/AppHeader'
-// import { CodeBlock } from './views/CodeBlock';
-import './assets/styles/global.scss'
 import { CodeBlock } from './views/CodeBlock';
 import { useState } from 'react';
+import { Lobby } from './views/Lobby'
+import './assets/styles/global.scss'
 
 function App() {
   const [title, setTitle] = useState('Choose Code Block')
@@ -20,7 +19,6 @@ function App() {
           <Route
             path="/codeblock/:id"
             element={<CodeBlock setTitle={setTitle} />}
-
           />
         </Routes>
       </Router>
