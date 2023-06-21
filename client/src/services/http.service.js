@@ -1,9 +1,7 @@
 import Axios from 'axios';
 
 export const SOCKET_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://localhost:3000'
-    : 'http://localhost:4000';
+  process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:4000';
 
 const BASE_URL =
   process.env.NODE_ENV === 'production'
