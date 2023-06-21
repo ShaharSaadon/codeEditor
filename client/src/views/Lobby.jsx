@@ -11,6 +11,7 @@ export function Lobby() {
         document.title = 'Lobby';
         dispatch(loadCodeBlocks())
     }, [])
+
     console.log(codeBlocks);
 
     return (

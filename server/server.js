@@ -2,10 +2,11 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const path = require('path');
+let corsOptions;
+let userCount = 0;
 
 const app = express();
 const http = require('http').createServer(app);
-const port = process.env.PORT || 3030;
 const io = require('socket.io')(http, {
   cors: {
     origin: '*',
@@ -16,13 +17,17 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'public')));
 } else {
   const corsOptions = {
-    origin: ['http://127.0.0.1:5173', 'http://localhost:5173'],
+    origin: [
+      'http://127.0.0.1:3030',
+      'http://localhost:3030',
+      'http://localhost:3000',
+    ],
     credentials: true,
   };
   app.use(cors(corsOptions));
 }
 
-let userCount = 0;
+app.use(cors(corsOptions));
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -54,6 +59,7 @@ const codeBlockRoutes = require('./api/codeBlock/codeBlock.routes');
 app.use(express.json()); // handle with put requests
 app.use('/api/codeBlock', codeBlockRoutes);
 
+const port = process.env.PORT || 3030;
 http.listen(port, () => {
   console.log('Server is running on port: ', port);
 });

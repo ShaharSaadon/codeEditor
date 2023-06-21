@@ -34,6 +34,7 @@ async function updateCodeBlock(req, res) {
     res.status(500).send({ err: 'Failed to update codeBlock' });
   }
 }
+
 module.exports = {
   getCodeBlockById,
   getCodeBlocks,
