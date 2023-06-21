@@ -5,6 +5,10 @@ import { updateCodeBlock } from '../store/actions/codeBlock.actions.js';
 import { SOCKET_URL } from '../services/http.service.js';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
+import { Loader } from '../components/Loader';
+import { Box } from '@mui/material';
+import { ConfettiFeature } from '../components/Confetti';
+import { HintModal } from '../components/HintModal'
 import Button from '@mui/material/Button';
 
 import AceEditor from 'react-ace';
@@ -12,14 +16,14 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
-import { Loader } from '../components/Loader';
-import { Box, Grid } from '@mui/material';
 
 export function CodeBlock({ setTitle }) {
     const { id } = useParams()
     const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
     const [isTeacher, setIsTeacher] = useState(true);
-
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const handleOpen = () => setIsModalOpen(true);
+    const handleClose = () => setIsModalOpen(false)
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const socketRef = useRef();
@@ -76,6 +80,8 @@ export function CodeBlock({ setTitle }) {
 
     return (
         <div>
+            <h2>{isTeacher ? 'Teacher Mode (Can\'t edit)' : 'Student Mode'}</h2>
+            <h3>instruction: {codeBlock.instruction}</h3>
             <AceEditor
                 mode="javascript"
                 theme="monokai"
@@ -91,11 +97,13 @@ export function CodeBlock({ setTitle }) {
             />
 
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: '100px' }}>
-                <Button variant="contained" onClick={goBack} sx={{ mr: '100px' }}>Back</Button>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: '100px' }}>
+                <Button variant="contained" onClick={goBack}>Back</Button>
                 <Button variant="contained" onClick={save}>Save</Button>
+                <Button variant="contained" onClick={handleOpen}>Hint</Button>
             </Box>
-
+            <HintModal isModalOpen={isModalOpen} handleClose={handleClose} hint={codeBlock.hint} />
+            {/* <ConfettiFeature /> */}
         </div>
     )
 }

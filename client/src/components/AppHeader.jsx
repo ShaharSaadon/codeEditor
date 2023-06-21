@@ -13,7 +13,7 @@ export function AppHeader({ title }) {
             <AppBar position="static" style={{ backgroundColor: 'white' }} >
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between', height: '10vh' }}>
                     <img src={logo} alt="" className='logo' />
-                    <Typography variant="h3" component="div" style={{ color: '#0a1929' }}>
+                    <Typography variant="h4" component="div" style={{ color: '#0a1929' }}>
                         {title}
                     </Typography>
                     <img src={logo} alt="" className='logo' />
