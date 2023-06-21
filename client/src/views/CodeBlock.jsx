@@ -5,14 +5,17 @@ import { updateCodeBlock } from '../store/actions/codeBlock.actions.js';
 import { SOCKET_URL } from '../services/http.service.js';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
+import Button from '@mui/material/Button';
 
 import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
+import { Loader } from '../components/Loader';
+import { Box, Grid } from '@mui/material';
 
-export function CodeBlock() {
+export function CodeBlock({ setTitle }) {
     const { id } = useParams()
     const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
     const [isTeacher, setIsTeacher] = useState(true);
@@ -23,7 +26,6 @@ export function CodeBlock() {
 
     useEffect(() => {
         loadCodeBlock()
-
         // Create a socket connection
         socketRef.current = io(SOCKET_URL);
         socketRef.current.on('is teacher', (isTeacher) => {
@@ -52,6 +54,7 @@ export function CodeBlock() {
         try {
             const codeBlock = await codeBlockService.getById(id);
             setCodeBlock(codeBlock);
+            setTitle(codeBlock.title)
         } catch (error) {
             console.log('error:', error);
         }
@@ -69,9 +72,10 @@ export function CodeBlock() {
         navigate(-1)
     }
 
+    if (codeBlock.title === '' && codeBlock.code === '') return <Loader />
+
     return (
         <div>
-            <h1>{codeBlock.title}</h1>
             <AceEditor
                 mode="javascript"
                 theme="monokai"
@@ -86,8 +90,12 @@ export function CodeBlock() {
                 style={{ width: '100%', height: '400px' }}
             />
 
-            <button onClick={goBack}>Back</button>
-            <button onClick={save}>run & save</button>
+
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: '100px' }}>
+                <Button variant="contained" onClick={goBack} sx={{ mr: '100px' }}>Back</Button>
+                <Button variant="contained" onClick={save}>Save</Button>
+            </Box>
+
         </div>
     )
 }

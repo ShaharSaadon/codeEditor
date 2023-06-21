@@ -12,6 +12,8 @@ html {
 body {
   font-size: rem(16px);
   min-height: 100vh;
+  background-color: $dark-color;
+  color: $light-color;
   font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -19,8 +21,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
-  background-color: black;
-  color: white;
 }
 
 img {

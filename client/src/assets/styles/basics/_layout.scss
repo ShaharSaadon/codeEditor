@@ -1,0 +1,27 @@
+.main-container {
+  display: grid;
+  grid-template-columns: 0 1fr 0;
+
+  > * {
+    grid-column: 2;
+
+    &.full {
+      grid-column: 1 /-1;
+    }
+  }
+
+  // bigger than 620px
+  @include mq(mobile-breakpoint) {
+    grid-template-columns: em($narrow-padding) 1fr em($narrow-padding);
+  }
+
+  // bigger than 960px
+  @include mq(narrow-breakpoint) {
+    grid-template-columns: em($normal-padding) 1fr em($normal-padding);
+  }
+
+  // bigger than 1200px
+  @include mq(normal-breakpoint) {
+    grid-template-columns: ($wide-padding) 1fr ($wide-padding);
+  }
+}

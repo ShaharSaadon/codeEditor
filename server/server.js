@@ -4,7 +4,6 @@ const cors = require('cors');
 const path = require('path');
 let corsOptions;
 let userCount = 0;
-
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
@@ -13,22 +12,41 @@ const io = require('socket.io')(http, {
   },
 });
 
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.resolve(__dirname, 'public')));
+// } else {
+//   const corsOptions = {
+//     origin: [
+//       'http://127.0.0.1:3030',
+//       'http://localhost:3030',
+//       'http://localhost:3000',
+//       'http://localhost:4000',
+//       'http://localhost:5173',
+//       'http://127.0.0.1:5173',
+//     ],
+//     credentials: true,
+//   };
+//   app.use(cors(corsOptions));
+// }
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'public')));
+  corsOptions = {
+    origin: '*',
+  };
 } else {
-  const corsOptions = {
+  corsOptions = {
     origin: [
       'http://127.0.0.1:3030',
       'http://localhost:3030',
       'http://localhost:3000',
+      'http://localhost:4000',
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
     ],
     credentials: true,
   };
-  app.use(cors(corsOptions));
 }
-
-app.use(cors(corsOptions));
-
 io.on('connection', (socket) => {
   console.log('a user connected');
   userCount++;
@@ -53,6 +71,8 @@ io.on('connection', (socket) => {
     console.log('userCount:', userCount);
   });
 });
+
+app.use(cors(corsOptions));
 
 const codeBlockRoutes = require('./api/codeBlock/codeBlock.routes');
 
