@@ -22,6 +22,7 @@ export function CodeBlock({ setTitle }) {
     const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
     const [isTeacher, setIsTeacher] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isSolutionCorrect, setIsSolutionCorrect] = useState(false)
     const handleOpen = () => setIsModalOpen(true);
     const handleClose = () => setIsModalOpen(false)
     const navigate = useNavigate()
@@ -69,18 +70,25 @@ export function CodeBlock({ setTitle }) {
     function handleCodeChange(newCode) {
         setCodeBlock(prevCodeBlock => ({ ...prevCodeBlock, code: newCode }))
 
+        if (normalize(newCode) === normalize(codeBlock.solution)) setIsSolutionCorrect(true)
+        else setIsSolutionCorrect(false)
+
         // Emit a 'code change' event to the server
         socketRef.current.emit('code change', { ...codeBlock, code: newCode });
+
     }
     function goBack() {
         navigate(-1)
+    }
+    function normalize(str) {
+        return str.replace(/\s+/g, ' ').trim();
     }
 
     if (codeBlock.title === '' && codeBlock.code === '') return <Loader />
 
     return (
         <div>
-            <h2>{isTeacher ? 'Teacher Mode (Can\'t edit)' : 'Student Mode'}</h2>
+            <h2>{isTeacher ? 'Teacher Mode' : 'Student Mode'}</h2>
             <h3>instruction: {codeBlock.instruction}</h3>
             <AceEditor
                 mode="javascript"
@@ -96,14 +104,15 @@ export function CodeBlock({ setTitle }) {
                 style={{ width: '100%', height: '400px' }}
             />
 
-
+            <p>{isTeacher ? `solution: ${codeBlock.solution}` : ''}</p>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: '100px' }}>
                 <Button variant="contained" onClick={goBack}>Back</Button>
                 <Button variant="contained" onClick={save}>Save</Button>
                 <Button variant="contained" onClick={handleOpen}>Hint</Button>
             </Box>
             <HintModal isModalOpen={isModalOpen} handleClose={handleClose} hint={codeBlock.hint} />
-            {/* <ConfettiFeature /> */}
+            <ConfettiFeature isSolutionCorrect={isSolutionCorrect} />
+
         </div>
     )
 }
