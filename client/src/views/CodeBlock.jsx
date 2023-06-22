@@ -49,7 +49,7 @@ export function CodeBlock({ setTitle }) {
             setCodeBlock(codeBlock);
             setTitle(codeBlock.title)
         } catch (error) {
-            console.log('error:', error);
+            ('error:', error);
         }
     }
     async function save() {

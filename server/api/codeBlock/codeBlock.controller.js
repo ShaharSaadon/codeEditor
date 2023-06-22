@@ -22,7 +22,6 @@ async function getCodeBlockById(req, res) {
 async function updateCodeBlock(req, res) {
   try {
     const codeBlock = req.body;
-    console.log('req.body:', req.body);
     const updatedCodeBlock = await codeBlockService.update(codeBlock);
     res.json(updatedCodeBlock);
   } catch (err) {

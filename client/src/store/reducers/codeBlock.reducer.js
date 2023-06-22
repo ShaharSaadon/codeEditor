@@ -13,8 +13,6 @@ export function codeBlockReducer(state = INITIAL_STATE, action = {}) {
         codeBlocks: action.codeBlocks,
       };
     case UPDATE_CODEBLOCK:
-      console.log(state.codeBlocks);
-      console.log(action);
       return {
         ...state,
         codeBlocks: Array.isArray(state.codeBlocks)

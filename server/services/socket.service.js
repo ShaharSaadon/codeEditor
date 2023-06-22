@@ -26,7 +26,6 @@ module.exports = function (io) {
 
     socket.on('disconnect', () => {
       console.log('user disconnected');
-      // Here you need to handle user disconnection from all rooms they're in
     });
   });
 };
