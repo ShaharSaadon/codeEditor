@@ -21,9 +21,9 @@ const modalTypes = {
 }
 
 export function CodeBlock({ setTitle }) {
-    const { codeBlockId } = useParams()
+    const { id } = useParams()
 
-    const [codeBlock, setCodeBlock] = useState({ codeBlockId: '', title: '', code: '' })
+    const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
     const [isTeacher, setIsTeacher] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isSolutionCorrect, setIsSolutionCorrect] = useState(false)
@@ -32,11 +32,11 @@ export function CodeBlock({ setTitle }) {
     const handleClose = () => setIsModalOpen(false)
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const socket = useSocket(codeBlockId, setCodeBlock, setIsTeacher);
+    const socket = useSocket(id, setCodeBlock, setIsTeacher);
 
     useEffect(() => {
         loadCodeBlock()
-    }, [codeBlockId])
+    }, [id])
 
     useEffect(() => {
         document.title = `CodeBlock ${codeBlock.title}`;
@@ -45,7 +45,7 @@ export function CodeBlock({ setTitle }) {
 
     async function loadCodeBlock() {
         try {
-            const codeBlock = await codeBlockService.getById(codeBlockId);
+            const codeBlock = await codeBlockService.getById(id);
             setCodeBlock(codeBlock);
             setTitle(codeBlock.title)
         } catch (error) {
