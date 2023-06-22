@@ -5,7 +5,7 @@
 
 # CodeEditor
 
-CodeEditor is a simple, real-time collaborative code editor built with React, Redux, and Socket.IO. It allows users to create code blocks, edit them in real time, and share them with others. This project was created as part of a job interview assignment.
+CodeEditor is a simple, real-time collaborative code editor built with React, Redux, and Socket.IO. It allows users to create code blocks, edit them in real-time, and share them with others. This project was created as part of a job interview assignment.
 
 ## Navigation
 
@@ -16,6 +16,23 @@ CodeEditor is a simple, real-time collaborative code editor built with React, Re
 - [Getting Started](#getting-started)
 
 ## Features
+**Hint Option:** Users can access hints for the code block. Clicking on the "Hint" button opens a modal that displays a hint related to the code block.
+
+**Live Code Updating**: As users type or modify code in the Ace Editor component, the changes are updated in real-time. This allows users to see the code updating dynamically without the need for manual refreshing.
+
+**Student-Only Editing:** In "Student Mode," only the student has the ability to edit the code. The teacher can view and interact with the code but cannot modify it. This differentiation between teacher and student roles ensures proper code block management.
+
+**Loader for Loading State:** When code blocks are being loaded, a loader component is displayed to indicate that the app is fetching data. This provides visual feedback to the user and prevents interaction with incomplete code block data.
+
+**Responsive UI:** The app's user interface is designed to be responsive, adapting to different screen sizes and resolutions. This ensures a consistent and accessible experience across various devices and platforms.
+
+**Navigation and Routing:** Users can navigate between different views using the app's navigation system, powered by React Router Dom. The use of routes and route parameters allows for seamless transitions between the Lobby and CodeBlock views.
+
+**Clear User Interface Structure:** The user interface is organized into sections such as the main container, header, footer, cards container, code block container, etc. This clear structure enhances the user experience by providing a logical flow and visual hierarchy.
+
+**Modal Dialogs:** The app utilizes modal dialogs for displaying additional information such as hints and solutions. These modal dialogs overlay the main content, ensuring focus and attention on the specific information being presented.
+
+**Confetti for Correct Solution:** When the user's solution matches the correct solution for the code block, a confetti animation is displayed, providing visual feedback for a correct answer.
 
 
 
@@ -55,7 +72,7 @@ In student mode, the user can actively modify the code within the selected code 
 ### Correct Solution
 ![Correct Solution](screenshots/CorrectSolution.png)
 
-When the user successfully enters the correct solution to the coding task, the screen goes wild with confetti. Because let's be honest, confetti brings a whole new level of happiness..
+When the user successfully enters the correct solution to the coding task, the screen goes wild with confetti. Because let's be honest, confetti it's much better than "smilie on the screen" :)
 
 
 ## Mobile
@@ -84,4 +101,3 @@ Ensure you have the following installed on your local system:
 ## Usage
 
 Visit `http://localhost:5173` to view the application in your browser. If the application is running on a different port, make sure to update the server's core address accordingly.
-
