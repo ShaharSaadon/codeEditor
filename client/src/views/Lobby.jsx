@@ -20,13 +20,13 @@ export function Lobby({ setTitle }) {
     return (
         <div className='cards-container'>
             <Grid container spacing={2} >
-                {Array.isArray(codeBlocks) && codeBlocks.map((block) => (
-                    <Grid item xs={12} sm={6} md={4} key={block._id}>
-                        <Link to={`/codeblock/${block._id}`}>
+                {Array.isArray(codeBlocks) && codeBlocks.map((codeBlock) => (
+                    <Grid item xs={12} sm={6} md={4} key={codeBlock._id}>
+                        <Link to={`/codeblock/${codeBlock._id}`}>
                             <Card className='code-block-card'>
                                 <CardContent>
                                     <Typography variant="h5" component="div">
-                                        {block.title}
+                                        {codeBlock.title}
                                     </Typography>
                                 </CardContent>
                             </Card>

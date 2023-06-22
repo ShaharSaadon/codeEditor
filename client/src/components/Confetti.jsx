@@ -21,14 +21,14 @@ export function ConfettiFeature({ isSolutionCorrect }) {
 
 
     return (
-        <>
+        <div>
             {showConfetti && (
                 <Confetti
                     width={width}
                     height={height}
                 />
             )}
-        </>
+        </div>
     )
 }
 

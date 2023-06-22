@@ -21,9 +21,9 @@ const modalTypes = {
 }
 
 export function CodeBlock({ setTitle }) {
-    const { id } = useParams()
+    const { codeBlockId } = useParams()
 
-    const [codeBlock, setCodeBlock] = useState({ id: '', title: '', code: '' })
+    const [codeBlock, setCodeBlock] = useState({ codeBlockId: '', title: '', code: '' })
     const [isTeacher, setIsTeacher] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isSolutionCorrect, setIsSolutionCorrect] = useState(false)
@@ -32,11 +32,11 @@ export function CodeBlock({ setTitle }) {
     const handleClose = () => setIsModalOpen(false)
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const socket = useSocket(id, setCodeBlock, setIsTeacher);
+    const socket = useSocket(codeBlockId, setCodeBlock, setIsTeacher);
 
     useEffect(() => {
         loadCodeBlock()
-    }, [id])
+    }, [codeBlockId])
 
     useEffect(() => {
         document.title = `CodeBlock ${codeBlock.title}`;
@@ -45,7 +45,7 @@ export function CodeBlock({ setTitle }) {
 
     async function loadCodeBlock() {
         try {
-            const codeBlock = await codeBlockService.getById(id);
+            const codeBlock = await codeBlockService.getById(codeBlockId);
             setCodeBlock(codeBlock);
             setTitle(codeBlock.title)
         } catch (error) {
@@ -68,6 +68,7 @@ export function CodeBlock({ setTitle }) {
     function goBack() {
         navigate(-1)
     }
+    // Normalize a string by removing extra spaces and trimming it
     function normalize(str) {
         return str.replace(/\s+/g, ' ').trim();
     }

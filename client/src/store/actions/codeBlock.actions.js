@@ -4,6 +4,7 @@ import {
   UPDATE_CODEBLOCK,
 } from '../reducers/codeBlock.reducer.js';
 
+// Load all code blocks and dispatch them to the store
 export function loadCodeBlocks() {
   return async (dispatch) => {
     try {
@@ -19,6 +20,7 @@ export function loadCodeBlocks() {
   };
 }
 
+// Update a code block and dispatch the updated code block to the store
 export function updateCodeBlock(codeBlock) {
   return async (dispatch) => {
     try {
