@@ -5,7 +5,7 @@
 
 # CodeEditor
 
-CodeEditor is a simple, real-time collaborative code editor built with React, Redux, and Socket.IO. It allows users to create code blocks, edit them in real-time, and share them with others. This project was created as part of a job interview assignment.
+CodeEditor is a simple, real-time collaborative code editor built with React, Redux, and Socket.IO. It allows users to choose code block, edit them in real-time, and share them with others. This project was created as part of a job interview assignment.
 
 You can access the deployed application at https://code-editor-auw3.onrender.com/. (Please note that the initial loading may take few seconds due to the fact that is free server service.
 
