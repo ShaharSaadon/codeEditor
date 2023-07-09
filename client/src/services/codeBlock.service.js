@@ -12,10 +12,10 @@ async function query() {
   return httpService.get(STORAGE_KEY);
 }
 
-async function getById(codeBlockId) {
-  return httpService.get(`${STORAGE_KEY}/${codeBlockId}`);
-}
-
 async function update(codeBlock) {
   return httpService.put(`${STORAGE_KEY}/${codeBlock._id}`, codeBlock);
+}
+
+async function getById(codeBlockId) {
+  return httpService.get(`${STORAGE_KEY}/${codeBlockId}`);
 }

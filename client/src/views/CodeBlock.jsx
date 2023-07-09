@@ -104,8 +104,8 @@ export function CodeBlock({ setTitle }) {
             </div>
             <DynamicModal isModalOpen={isModalOpen}
                 handleClose={handleClose}
-                text={(modalType === 'hint') ? codeBlock.hint : codeBlock.solution}
-                title={(modalType === 'hint') ? 'Hey! It\'s great ask for help when you need🌞' : 'Here is the solution for you'}
+                text={(modalType === modalTypes.HINT) ? codeBlock.hint : codeBlock.solution}
+                title={(modalType === modalTypes.HINT) ? 'Hey! It\'s great ask for help when you need🌞' : 'Here is the solution for you'}
             />
             <ConfettiFeature isSolutionCorrect={isSolutionCorrect} />
 
